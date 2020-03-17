@@ -52,7 +52,6 @@ public class TmdbRequest {
 
 		}
 
-
 		return result;
 	}
 
