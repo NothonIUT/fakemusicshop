@@ -32,11 +32,13 @@ public class TmdbRequest {
 		}
 	}
 
-	public String sendRequest(Map<String, String> termeRecherche) throws ClientProtocolException, IOException {
+	public String sendRequest(Map<String, String> termeRecherche) {
 
 		HttpClient client = new DefaultHttpClient();
 		HttpGet request = new HttpGet(urlRequest + parseMap(termeRecherche));
-		HttpResponse response = client.execute(request);
+		HttpResponse response;
+		try {
+			response = client.execute(request);
 		System.out.println(urlRequest + parseMap(termeRecherche));
 		System.out.println(response);
 
@@ -51,8 +53,17 @@ public class TmdbRequest {
 			result = sc.nextLine();
 
 		}
-
+		
 		return result;
+
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "Error";
+		
 	}
 
 	public String parseMap(Map<String, String> map) {

@@ -12,7 +12,7 @@ import commerce.catalogue.domaine.utilitaire.TmdbRequest;
 
 public class main {
 
-	public static void main(String[] args) throws ClientProtocolException, IOException {
+	public static void main(String[] args) {
 
 		TmdbRequest tmdb = new TmdbRequest("search/movie");
 		Map<String, String> map = new HashMap<>();
