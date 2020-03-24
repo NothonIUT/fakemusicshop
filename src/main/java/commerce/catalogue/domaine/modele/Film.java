@@ -15,29 +15,44 @@ import commerce.catalogue.domaine.utilitaire.TmdbRequest;
 
 //@Entity (name="commerce.catalogue.domaine.modele.Film")
 //@DiscriminatorValue("film")
+@Entity (name="commerce.catalogue.domaine.modele.Film")
+@DiscriminatorValue("film")
 public class Film extends Article {
 
 	private String realisateur; // A trouver
-	private String description; // Champ overview
-	private List<String> genres; // Champ genres
+	//private List<String> genres; // Champ genres
 	private String annee; // Champ release_date
 	private int idTmdb; // Champ id
 	private float note; // Champ vote_average
 	private String api_response;
 
-	public Film(String titre) {
+	public Film() {
+		
+		super();
+		this.realisateur = "";
+		this.annee = "";
+		this.idTmdb = 0;
+		this.note = -1;
+		
+	}
+	
+	public Film(String titre, double prix) {
 
 		MovieFinder finder = new MovieFinder();
 
 		this.api_response = finder.getFilm(titre);
 		
 		this.parseFilm(api_response);
+		super.setPrix(prix);
+		this.realisateur = "";
+		super.setDisponibilite(200);
 	}
 
 	public Film(int id) {
 
 	}
 
+	@Basic
 	public String getRealisateur() {
 		return realisateur;
 	}
@@ -46,14 +61,7 @@ public class Film extends Article {
 		this.realisateur = realisateur;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
+/*	@Basic
 	public List<String> getGenres() {
 		return genres;
 	}
@@ -61,11 +69,13 @@ public class Film extends Article {
 	public void setGenres(List<String> genres) {
 		this.genres = genres;
 	}
-
+*/
+	@Basic
 	public String getAnnee() {
 		return annee;
 	}
 
+	@Basic
 	public void setAnnee(String annee) {
 		this.annee = annee;
 	}
@@ -78,6 +88,7 @@ public class Film extends Article {
 		this.idTmdb = idTmdb;
 	}
 
+	@Basic
 	public float getNote() {
 		return note;
 	}
@@ -91,10 +102,16 @@ public class Film extends Article {
 		JSONArray arr = obj.getJSONArray("results");
 		
 		super.setTitre(arr.getJSONObject(0).getString("title"));
-		this.description = arr.getJSONObject(0).getString("overview");
+		super.setDescription(arr.getJSONObject(0).getString("overview"));;
 		super.setImage("http://image.tmdb.org/t/p/w500" + arr.getJSONObject(0).getString("poster_path"));
 		this.annee = arr.getJSONObject(0).getString("release_date");
 		this.idTmdb = arr.getJSONObject(0).getInt("id");
 		this.note = arr.getJSONObject(0).getFloat("vote_average");
+	}
+	
+	@Override
+	public String toString() {
+		
+		return "Titre : "+getTitre()+" Prix : "+getPrix() + " Description : "+getDescription();
 	}
 }

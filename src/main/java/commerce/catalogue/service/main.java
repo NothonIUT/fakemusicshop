@@ -19,7 +19,7 @@ public class main {
 
 	public static void main(String[] args) throws JsonProcessingException, IOException {
 
-		Film unFilm = new Film("django");
+		Film unFilm = new Film("django", 25);
 		System.out.println("Titre : " + unFilm.getTitre());
 		System.out.println("Description : "+ unFilm.getDescription());
 	}

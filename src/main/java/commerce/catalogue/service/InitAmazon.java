@@ -31,6 +31,7 @@ import com.zeloon.deezer.domain.internal.search.SearchArtist;
 import amazon.apaIO.ApaiIO;
 import amazon.apaIO.configuration.GenericConfiguration;
 import amazon.apaIO.operations.Search;
+import commerce.catalogue.domaine.modele.Film;
 import commerce.catalogue.domaine.modele.Livre;
 import commerce.catalogue.domaine.modele.Musique;
 import commerce.catalogue.domaine.modele.Piste;
@@ -88,6 +89,18 @@ public class InitAmazon {
 			document = builder.build(new StringReader(apaiIO.runOperation(search)));
 			racine = document.getRootElement() ;
 			espaceNom = Namespace.getNamespace(racine.getNamespaceURI());
+			
+			catalogueManager.soumettreArticle(new Film("Django", 25.0));
+			catalogueManager.soumettreArticle(new Film("1917", 25.0));
+			catalogueManager.soumettreArticle(new Film("joker", 25.0));
+			catalogueManager.soumettreArticle(new Film("Alice%20au%20pays%20des%20merveilles", 25.0));
+			catalogueManager.soumettreArticle(new Film("Titanic", 25.0));
+			catalogueManager.soumettreArticle(new Film("Avatar", 25.0));
+			catalogueManager.soumettreArticle(new Film("The%20Truman%20show", 25.0));
+			catalogueManager.soumettreArticle(new Film("Jumanji", 25.0));
+
+
+
 
 			if (espaceNom != null && !racine.getName().equals("ItemSearchErrorResponse")) {
 				Element items = racine.getChild("Items",espaceNom) ;
@@ -103,6 +116,8 @@ public class InitAmazon {
 					musique = new Musique();
 					try 
 					{
+
+
 						if (itemAttributes.getChild("ProductGroup",espaceNom).getText().equals("Music")) {
 							musique.setRefArticle(item.getChild("ASIN",espaceNom).getText());
 							musique.setTitre(itemAttributes.getChild("Title",espaceNom).getText());
@@ -201,6 +216,9 @@ public class InitAmazon {
 		}
 		catch (IOException e) {
 			e.printStackTrace() ;
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 }
