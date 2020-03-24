@@ -8,10 +8,7 @@ import javax.persistence.Basic;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.JsonParser;
+import org.json.*;
 
 import commerce.catalogue.domaine.utilitaire.MovieFinder;
 import commerce.catalogue.domaine.utilitaire.TmdbRequest;
@@ -23,23 +20,22 @@ public class Film extends Article {
 	private String realisateur; // A trouver
 	private String description; // Champ overview
 	private List<String> genres; // Champ genres
-	private int annee; // Champ realease_date
+	private String annee; // Champ release_date
 	private int idTmdb; // Champ id
 	private float note; // Champ vote_average
 	private String api_response;
-	
-	
-	public Film(String titre){
-		
+
+	public Film(String titre) {
+
 		MovieFinder finder = new MovieFinder();
-		
+
 		this.api_response = finder.getFilm(titre);
 		
-		super.setTitre(titre);
+		this.parseFilm(api_response);
 	}
-	
+
 	public Film(int id) {
-		
+
 	}
 
 	public String getRealisateur() {
@@ -66,11 +62,11 @@ public class Film extends Article {
 		this.genres = genres;
 	}
 
-	public int getAnnee() {
+	public String getAnnee() {
 		return annee;
 	}
 
-	public void setAnnee(int annee) {
+	public void setAnnee(String annee) {
 		this.annee = annee;
 	}
 
@@ -89,10 +85,16 @@ public class Film extends Article {
 	public void setNote(float note) {
 		this.note = note;
 	}
-	
-	private void parseFilm(String json) throws JsonParseException, IOException {
-		JsonParser parser = new  JsonFactory().createJsonParser(json);
+
+	private void parseFilm(String json) {
+		JSONObject obj = new JSONObject(json);
+		JSONArray arr = obj.getJSONArray("results");
+		
+		super.setTitre(arr.getJSONObject(0).getString("title"));
+		this.description = arr.getJSONObject(0).getString("overview");
+		super.setImage("http://image.tmdb.org/t/p/w500" + arr.getJSONObject(0).getString("poster_path"));
+		this.annee = arr.getJSONObject(0).getString("release_date");
+		this.idTmdb = arr.getJSONObject(0).getInt("id");
+		this.note = arr.getJSONObject(0).getFloat("vote_average");
 	}
-	
-	
 }

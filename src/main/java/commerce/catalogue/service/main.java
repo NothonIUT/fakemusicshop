@@ -5,19 +5,23 @@ import java.util.HashMap;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.JsonProcessingException;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import java.util.Map;
 
+import commerce.catalogue.domaine.modele.Film;
+import commerce.catalogue.domaine.utilitaire.MovieFinder;
 import commerce.catalogue.domaine.utilitaire.TmdbRequest;
 
 public class main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws JsonProcessingException, IOException {
 
-		TmdbRequest tmdb = new TmdbRequest("search/movie");
-		Map<String, String> map = new HashMap<>();
-		map.put("query", "Django");
-		System.out.println(tmdb.sendRequest(map));
+		Film unFilm = new Film("django");
+		System.out.println("Titre : " + unFilm.getTitre());
+		System.out.println("Description : "+ unFilm.getDescription());
 	}
 
 }
