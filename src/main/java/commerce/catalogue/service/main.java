@@ -17,8 +17,7 @@ public class main {
 		TmdbRequest tmdb = new TmdbRequest("search/movie");
 		Map<String, String> map = new HashMap<>();
 		map.put("query", "Django");
-		tmdb.sendRequest(map);
-		
+		System.out.println(tmdb.sendRequest(map));
 	}
 
 }
