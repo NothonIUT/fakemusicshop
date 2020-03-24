@@ -8,22 +8,18 @@ import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 
 /**
- * Title:        commerce
- * Description:  Class for e-commerce
- * Company:      IUT Laval - Université du Mans
- * Author  A. Corbière
+ * Title: commerce Description: Class for e-commerce Company: IUT Laval -
+ * Université du Mans Author A. Corbière
  */
 
-@Entity (name="commerce.catalogue.domaine.modele.Article")
-@DiscriminatorColumn(
-  name="article_type",
-  discriminatorType= DiscriminatorType.STRING
-)
+@Entity(name = "commerce.catalogue.domaine.modele.Article")
+@DiscriminatorColumn(name = "article_type", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("article")
 public class Article {
-	private String refArticle; 
+	private String refArticle;
 	private String titre; // Champ title
 	private String image; // Champ http://image.tmdb.org/t/p/w500/[poster_path]
+	private String description = "";
 	private double prix;
 	private int disponibilite;
 
@@ -31,59 +27,75 @@ public class Article {
 	public String getRefArticle() {
 		return refArticle;
 	}
+
 	public void setRefArticle(String inRefArticle) {
 		refArticle = inRefArticle;
 	}
-	
+
 	@Basic
 	public String getTitre() {
 		return titre;
 	}
+
 	public void setTitre(String inTitre) {
 		titre = inTitre;
-	}	  
-	
+	}
+
+	@Basic
+	public String getDescription(){
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	@Basic
 	public String getImage() {
 		return image;
 	}
+
 	public void setImage(String inImage) {
 		image = inImage;
 	}
-	
+
 	@Basic
 	public double getPrix() {
 		return prix;
 	}
+
 	public void setPrix(double inPrix) {
 		prix = inPrix;
 	}
+
 	public void setPrix(String inPrix) {
 		prix = Double.parseDouble(inPrix);
 	}
-	
+
 	@Basic
 	public int getDisponibilite() {
 		return disponibilite;
 	}
+
 	public void setDisponibilite(String inDisponibilite) {
 		disponibilite = Integer.parseInt(inDisponibilite);
 	}
+
 	public void setDisponibilite(int inDisponibilite) {
 		disponibilite = inDisponibilite;
 	}
 
 	public boolean equals(Object o) {
-		boolean retour = false ;
+		boolean retour = false;
 		if (!(o instanceof Article))
-			retour = false ;
+			retour = false;
 		else {
-			Article inArticle = (Article)o ;
+			Article inArticle = (Article) o;
 			if (this.getRefArticle().equals(inArticle.getRefArticle()))
-				retour = true ;
+				retour = true;
 			else
-				retour = false ;
+				retour = false;
 		}
-		return retour ;
+		return retour;
 	}
 }
