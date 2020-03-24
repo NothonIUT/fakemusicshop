@@ -44,9 +44,8 @@
 								article = (Article) listeDesArticles.next();
 					%>
 					<li class="product type-product"><a
-						href="<%=response.encodeURL("./controlePanier.jsp?refArticle="
-								+ article.getRefArticle()
-						+ "&amp;commande=ajouterLigne")%>"> <img
+						href="<%=response.encodeURL("./afficheArticle.jsp?refArticle="
+								+ article.getRefArticle())%>"> <img
 							src="<% if (article.getImage().startsWith("http")) 
 									    out.print(article.getImage()) ;
 							        else
