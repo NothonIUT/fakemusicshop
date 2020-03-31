@@ -90,6 +90,7 @@ public class InitAmazon {
 			racine = document.getRootElement() ;
 			espaceNom = Namespace.getNamespace(racine.getNamespaceURI());
 			
+			catalogueManager.soumettreArticle(new Film("Breaking%20Bad", 25.0));			
 			catalogueManager.soumettreArticle(new Film("Alad%272", 25.0));			
 			catalogueManager.soumettreArticle(new Film("Django", 25.0));
 			catalogueManager.soumettreArticle(new Film("1917", 25.0));
